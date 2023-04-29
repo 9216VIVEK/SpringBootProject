@@ -1,8 +1,10 @@
 package com.war.SpringBoot.service;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 @Service
+@Scope("prototype")
 public class GeneratePaymentQRCodeService extends GenericQRCodeGenerator {
 
 	private String url; 
