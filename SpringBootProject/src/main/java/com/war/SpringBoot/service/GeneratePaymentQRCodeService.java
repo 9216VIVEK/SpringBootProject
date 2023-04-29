@@ -3,6 +3,13 @@ package com.war.SpringBoot.service;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
+
+/**
+ * <h1> Infinite Computer Solutions </h1>
+ * @author Vivek S Rawat
+ * @since April 29, 2023
+ */
+
 @Service
 @Scope("prototype")
 public class GeneratePaymentQRCodeService extends GenericQRCodeGenerator {
