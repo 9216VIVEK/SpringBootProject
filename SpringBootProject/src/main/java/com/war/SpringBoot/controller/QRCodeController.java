@@ -1,7 +1,6 @@
 package com.war.SpringBoot.controller;
 
-import java.io.ByteArrayOutputStream;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -11,10 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.client.j2se.MatrixToImageWriter;
-import com.google.zxing.common.BitMatrix;
-import com.google.zxing.qrcode.QRCodeWriter;
+import com.war.SpringBoot.service.GeneratePaymentQRCodeService;
 
 /**
  * <h1> Infinite Computer Solutions </h1>
@@ -27,26 +23,26 @@ import com.google.zxing.qrcode.QRCodeWriter;
 @RequestMapping("/api/v1/QRCode")
 public class QRCodeController {
 	
+	@Autowired
+	private GeneratePaymentQRCodeService qrCodeService;
+	
 	@GetMapping(value = "/generate", produces = MediaType.IMAGE_PNG_VALUE)
-	public ResponseEntity<?> generateCode(@RequestParam String url){
+	public ResponseEntity<?> generateCode(
+			@RequestParam String receiverUPI,
+			@RequestParam String name,
+			@RequestParam double amount){
 		
 		try {
 			
-//		    String encodedUrl = "https://chart.googleapis.com/chart?cht=qr&chs=300x300&chl=" + URLEncoder.encode(url, StandardCharsets.UTF_8);
-
-
-			QRCodeWriter qrCodeWriter = new QRCodeWriter();
-			BitMatrix bitMatrix = qrCodeWriter.encode(url, BarcodeFormat.QR_CODE, 300, 300);
-
-	        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-	        MatrixToImageWriter.writeToStream(bitMatrix, "PNG", outputStream);
-	        byte[] pngBytes = outputStream.toByteArray();
+			qrCodeService.setUrl(receiverUPI, name, amount);
+			
+			byte[] generateCode = qrCodeService.generateCode();
 
 	        HttpHeaders headers = new HttpHeaders();
 	        headers.setContentType(MediaType.IMAGE_PNG);
-	        headers.setContentLength(pngBytes.length);
+	        headers.setContentLength(generateCode.length);
 
-	        return new ResponseEntity<>(pngBytes, headers, HttpStatus.OK);
+	        return new ResponseEntity<>(generateCode, headers, HttpStatus.OK);
 			
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
