@@ -8,11 +8,10 @@ import org.springframework.kafka.config.TopicBuilder;
 @Configuration
 public class KafkaTopicConfig {
 
-
     @Bean
     NewTopic FistKafkaTopic() {
 		return TopicBuilder.name("MyFirstKafkaTopic")
 				.build();
 	}
-
+    
 }
