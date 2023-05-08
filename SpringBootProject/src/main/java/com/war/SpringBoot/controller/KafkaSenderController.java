@@ -14,8 +14,7 @@ import com.war.SpringBoot.records.MessageRequest;
 public class KafkaSenderController {
 	
 	@Autowired
-	KafkaTemplate<String,String> kafkaTemplate;
-	
+	private KafkaTemplate<String,String> kafkaTemplate;
 	
 	@PostMapping("/send")
 	public void sendMessage(@RequestBody MessageRequest request ) {
