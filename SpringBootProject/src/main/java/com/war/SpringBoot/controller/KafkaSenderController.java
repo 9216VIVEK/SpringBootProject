@@ -18,7 +18,7 @@ public class KafkaSenderController {
 	
 	
 	@PostMapping("/send")
-	public void sendMessage(@RequestBody  MessageRequest request ) {
+	public void sendMessage(@RequestBody MessageRequest request ) {
 		
 		kafkaTemplate.send("MyFirstKafkaTopic", request.message());
 		
