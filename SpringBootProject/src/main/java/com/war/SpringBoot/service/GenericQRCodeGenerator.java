@@ -17,8 +17,13 @@ import com.google.zxing.qrcode.QRCodeWriter;
 
 public abstract class GenericQRCodeGenerator {
 	
-	public abstract String getUrl();
-	public abstract void setUrl(String receiverUPI,String name,double amount);
+	protected String url; 
+	
+	public String getUrl() {
+		return this.url;
+	}
+	
+	public abstract void setUrl(String url);
 	
 	public byte[] generateCode() throws IOException, WriterException{
 		

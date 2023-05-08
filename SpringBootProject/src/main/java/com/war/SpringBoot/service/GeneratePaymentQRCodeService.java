@@ -14,15 +14,13 @@ import org.springframework.stereotype.Service;
 @Scope("prototype")
 public class GeneratePaymentQRCodeService extends GenericQRCodeGenerator {
 
-	private String url; 
-	
-	@Override
-	public String getUrl() {
-		return this.url;
-	}
-	
-	@Override
 	public void setUrl(String receiverUPI,String name,double amount) {
-		this.url = "upi://pay?pa="+receiverUPI+"&pn="+name+"&cu=INR&am="+amount;
+		String url = "upi://pay?pa="+receiverUPI+"&pn="+name+"&cu=INR&am="+amount;
+		this.setUrl(url);
 	}
+
+	@Override
+	public void setUrl(String url) {
+		this.url = url;
+	};
 }
