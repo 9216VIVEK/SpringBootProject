@@ -21,6 +21,7 @@ public class GeneratePaymentQRCodeService extends GenericQRCodeGenerator {
 		return this.url;
 	}
 	
+	@Override
 	public void setUrl(String receiverUPI,String name,double amount) {
 		this.url = "upi://pay?pa="+receiverUPI+"&pn="+name+"&cu=INR&am="+amount;
 	}
